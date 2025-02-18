@@ -4,6 +4,7 @@ import com.example.androidentrevista.features.notes.data.repository.remote.mappe
 import com.example.androidentrevista.features.notes.data.repository.remote.repository.NotesRemoteRepository
 import com.example.androidentrevista.features.notes.domain.model.Note
 import com.example.androidentrevista.features.notes.domain.repository.NotesRepository
+import okhttp3.logging.HttpLoggingInterceptor
 
 class NotesRepositoryImpl(
     private val remoteRepository: NotesRemoteRepository,
