@@ -8,6 +8,7 @@ import com.example.androidentrevista.features.notes.data.repository.remote.repos
 import com.example.androidentrevista.features.notes.data.repository.remote.repository.NotesRemoteRepositoryImpl
 import com.example.androidentrevista.features.notes.domain.repository.NotesRepository
 import com.example.androidentrevista.features.notes.domain.usecase.GetNotesUseCase
+import com.example.androidentrevista.features.notes.domain.usecase.AddNotesUseCase
 import com.example.androidentrevista.features.notes.presentation.list.ListNotesViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf
@@ -22,6 +23,7 @@ object NotesModules {
         singleOf(::NotesRepositoryImpl) { bind<NotesRepository>() }
         singleOf(::NotesRemoteRepositoryImpl) { bind<NotesRemoteRepository>() }
         factoryOf(::GetNotesUseCase)
+        factoryOf(::AddNotesUseCase)
         factoryOf(::NotesMapperImpl) { bind<NotesMapper>() }
         viewModelOf(::ListNotesViewModel)
     }
