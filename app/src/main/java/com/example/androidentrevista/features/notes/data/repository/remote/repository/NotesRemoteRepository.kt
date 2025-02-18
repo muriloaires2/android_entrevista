@@ -11,4 +11,6 @@ interface NotesRemoteRepository {
 
     suspend fun deleteNote(noteId: Int): Response<Unit>
 
+    suspend fun logEvent(event: String)
+
 }

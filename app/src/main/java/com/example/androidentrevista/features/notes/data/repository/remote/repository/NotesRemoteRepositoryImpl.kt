@@ -3,6 +3,7 @@ package com.example.androidentrevista.features.notes.data.repository.remote.repo
 
 import com.example.androidentrevista.features.notes.data.repository.remote.NotesAPI
 import com.example.androidentrevista.features.notes.data.repository.remote.model.NoteDTO
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 
 class NotesRemoteRepositoryImpl(
@@ -19,5 +20,9 @@ class NotesRemoteRepositoryImpl(
 
     override suspend fun deleteNote(noteId: Int): Response<Unit> {
         return notesAPI.deleteNote(noteId)
+    }
+
+    override suspend fun logEvent(event: String) {
+        HttpLoggingInterceptor.Logger.DEFAULT.log(event)
     }
 }

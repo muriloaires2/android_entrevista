@@ -9,10 +9,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 class AddNotesUseCase {
-    private val notesRepository = NotesRepositoryImpl(
+    private val notesRepository: NotesRepositoryImpl = NotesRepositoryImpl(
         notesMapper = NotesMapperImpl(),
         remoteRepository = NotesRemoteRepositoryImpl(
-            Retrofit.Builder().build().create(NotesAPI::class.java)
+            Retrofit.Builder().baseUrl("https://first.interview.com/").build().create(NotesAPI::class.java)
         )
     )
 
