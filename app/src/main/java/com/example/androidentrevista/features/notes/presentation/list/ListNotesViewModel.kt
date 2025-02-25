@@ -3,6 +3,7 @@ package com.example.androidentrevista.features.notes.presentation.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidentrevista.features.notes.domain.model.Note
+import com.example.androidentrevista.features.notes.domain.usecase.AddNotesUseCase
 import com.example.androidentrevista.features.notes.domain.usecase.GetNotesUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 
 class ListNotesViewModel(
     private val getNotesUseCase: GetNotesUseCase,
+    private val addNotesUseCase: AddNotesUseCase
 ) : ViewModel() {
 
     private val _failure = MutableSharedFlow<String>()
@@ -27,14 +29,14 @@ class ListNotesViewModel(
     }
 
     private fun executeInitialized() = viewModelScope.launch {
-
         val result = getNotesUseCase()
-        result.onSuccess { notes ->
-            _notes.value = notes
-        }.onFailure {
-            _failure.emit("Erro ao carregar notas")
-        }
-
+        result.onSuccess { notes -> _notes.value = notes }.onFailure { _failure.emit("Erro ao carregar notas") }
     }
 
+    private fun addNote(note: Note) = viewModelScope.launch {
+        val result = addNotesUseCase.addNote(note)
+        result.onFailure {
+            _failure.emit("Erro ao adicionar nota")
+        }
+    }
 }
