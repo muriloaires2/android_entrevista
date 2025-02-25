@@ -1,15 +1,19 @@
 package com.example.androidentrevista.features.notes.data.repository;
 
+import com.example.androidentrevista.features.notes.data.repository.remote.NotesAPI
 import com.example.androidentrevista.features.notes.data.repository.remote.mapper.NotesMapper
-import com.example.androidentrevista.features.notes.data.repository.remote.repository.NotesRemoteRepository
+import com.example.androidentrevista.features.notes.data.repository.remote.repository.NotesRemoteRepositoryImpl
 import com.example.androidentrevista.features.notes.domain.model.Note
 import com.example.androidentrevista.features.notes.domain.repository.NotesRepository
-import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
 
 class NotesRepositoryImpl(
-    private val remoteRepository: NotesRemoteRepository,
     private val notesMapper: NotesMapper
 ): NotesRepository {
+
+    private val remoteRepository: NotesRemoteRepositoryImpl = NotesRemoteRepositoryImpl(
+        Retrofit.Builder().baseUrl("https://first.interview.com/").build().create(NotesAPI::class.java)
+    )
 
     override suspend fun getNotes(): Result<List<Note>> {
         val remoteNotes = remoteRepository.getNotes()

@@ -1,20 +1,10 @@
 package com.example.androidentrevista.features.notes.domain.usecase
 
-import com.example.androidentrevista.features.notes.data.repository.NotesRepositoryImpl
-import com.example.androidentrevista.features.notes.data.repository.remote.NotesAPI
-import com.example.androidentrevista.features.notes.data.repository.remote.mapper.NotesMapperImpl
-import com.example.androidentrevista.features.notes.data.repository.remote.repository.NotesRemoteRepositoryImpl
 import com.example.androidentrevista.features.notes.domain.model.Note
+import com.example.androidentrevista.features.notes.domain.repository.NotesRepository
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
 
-class AddNotesUseCase {
-    private val notesRepository: NotesRepositoryImpl = NotesRepositoryImpl(
-        notesMapper = NotesMapperImpl(),
-        remoteRepository = NotesRemoteRepositoryImpl(
-            Retrofit.Builder().baseUrl("https://first.interview.com/").build().create(NotesAPI::class.java)
-        )
-    )
+class AddNotesUseCase(private val notesRepository: NotesRepository) {
 
     suspend fun addNote(note: Note): Result<Note> {
         return notesRepository.addNote(note).onFailure {
